@@ -73,4 +73,6 @@ Server.register( {
 
     }
 
+    Events.emmit('web:init');
+
 } );
