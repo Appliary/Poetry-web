@@ -1,0 +1,16 @@
+{
+  "name": "poetry-web",
+  "version": "0.0.2",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "MicCarr <miccarr@me.com>",
+  "license": "ISC",
+  "dependencies": {
+    "h2o2": "^5.1.0",
+    "poetry": "https://github.com/Appliary/Poetry.git"
+  }
+}
