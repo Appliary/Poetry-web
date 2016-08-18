@@ -1,6 +1,6 @@
 {
   "name": "poetry-web",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -11,6 +11,6 @@
   "license": "ISC",
   "dependencies": {
     "h2o2": "^5.1.0",
-    "poetry": "https://github.com/Appliary/Poetry.git"
+    "poetry": "^0.0.4"
   }
 }
