@@ -73,6 +73,6 @@ Server.register( {
 
     }
 
-    Events.emmit('web:init');
+    Events.emit('web:init');
 
 } );
