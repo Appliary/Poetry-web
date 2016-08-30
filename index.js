@@ -26,9 +26,10 @@ Server.register( {
             route.handler = handler( r );
             // Don't parse
             if ( !route.config ) route.config = {};
-            route.config.payload = {
-                parse: false
-            };
+            if( route.method.toUpperCase() != 'GET' && route.method.toUpperCase() != 'HEAD')
+                route.config.payload = {
+                    parse: false
+                };
 
             // Register to HAPI
             Server.route( route );
