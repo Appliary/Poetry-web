@@ -11,7 +11,7 @@ Server.register( [
 	{
 		register: require( 'hapi-swaggered' ),
 		options: {
-			requiredTags: [],
+			requiredTags: ['get'],
 			endpoint: '/api',
 			info: {
 				title: 'IOTFactory',
