@@ -13,14 +13,17 @@ Server.register( {
     Events.on( 'web:route', {}, ( route, sender ) => {
 
         let r = route.method + ' ' + route.path;
+        let poetryPort = route.poetryPort || 8000;
+        delete route.poetryPort;
 
         // New route
         if ( !routes[ r ] ) {
 
-            Log.info( 'New route `' + r + '` registered for', sender.address );
+            Log.info( 'New route `' + r + '` registered for',
+            sender.address +':'+ poetryPort );
 
             // Register the HOST ip
-            routes[ r ] = [ sender.address ];
+            routes[ r ] = [ sender.address+':'+ poetryPort ];
 
             // Add handler
             route.handler = handler( r );
@@ -42,8 +45,8 @@ Server.register( {
             Log.info( 'Balanced route `' + r + '` registered for', sender.address );
 
             // Add HOST ip
-            if ( routes[ r ].indexOf( sender.address ) )
-                routes[ r ].push( sender.address );
+            if ( routes[ r ].indexOf( sender.address+':'+ poetryPort ) )
+                routes[ r ].push( sender.address+':'+ poetryPort );
 
         }
 
@@ -55,18 +58,20 @@ Server.register( {
         return function ( req, reply ) {
 
             // Round robin'
-            let host = routes[ route ].pop();
-            routes[ route ].unshift( host );
+            let node = routes[ route ].pop();
+            routes[ route ].unshift( node );
+
+            let host = node.split(':');
 
             reply.proxy( {
-                host: host,
-                port: 8000,
+                host: host[0],
+                port: host[1] || 8000,
                 protocol: 'http',
                 passThrough: true,
                 onResponse: (err, res, request, reply) => {
                     reply(res)
                     .header('X-PoweredBy', 'Poetry')
-                    .header('X-MicroServ', host);
+                    .header('X-MicroServ', node);
                 }
             } );
 
