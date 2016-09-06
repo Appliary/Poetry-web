@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "h2o2": "^5.1.0",
+    "hapi-swaggered": "^2.7.0",
     "poetry": "^0.0.7"
   }
 }

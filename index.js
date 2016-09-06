@@ -4,9 +4,18 @@ const Log = require( 'poetry/lib/methods/log.js' ),
 
 let routes = {};
 
-Server.register( {
-    register: require( 'h2o2' )
-}, ( err ) => {
+Server.register( [
+	{
+	    register: require( 'h2o2' )
+	},
+	{
+		register: require( 'hapi-swaggered' ),
+		options: {
+			requiredTags: [],
+			endpoint: '/api'
+		}
+	}
+], ( err ) => {
 
     if ( err ) throw err;
 
