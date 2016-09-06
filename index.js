@@ -12,7 +12,12 @@ Server.register( [
 		register: require( 'hapi-swaggered' ),
 		options: {
 			requiredTags: [],
-			endpoint: '/api'
+			endpoint: '/api',
+			info: {
+				title: 'IOTFactory',
+				description: 'Documentation of the IOTFactory api.',
+				version: '0.1.0'
+			}
 		}
 	}
 ], ( err ) => {
