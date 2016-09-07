@@ -14,7 +14,8 @@ Server.register( [ {
         info: {
             title: 'API Documentation',
             version: Date.toString()
-        }
+        },
+        cors: true
     }
 } ], ( err ) => {
 
