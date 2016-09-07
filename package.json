@@ -1,6 +1,6 @@
 {
   "name": "poetry-web",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -12,6 +12,6 @@
   "dependencies": {
     "h2o2": "^5.1.0",
     "hapi-swaggered": "^2.7.0",
-    "poetry": "0.0.8"
+    "poetry": "https://github.com/Appliary/Poetry.git"
   }
 }
