@@ -13,8 +13,16 @@ Server.register( [ {
         info: {
             title: 'API Documentation',
             version: Date.now()
+                .toString()
         },
-        cors: true
+        tagging: {
+            mode: 'tags'
+        },
+        requiredTags: [ 'all' ],
+        cors: {
+            origin: [ '*' ],
+            credentials: true
+        }
     }
 } ], ( err ) => {
     if ( err ) throw err;
