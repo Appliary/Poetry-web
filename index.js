@@ -12,7 +12,7 @@ Server.register( [ {
         endpoint: '/api',
         info: {
             title: 'API Documentation',
-            version: Date.toString()
+            version: Date.now()
         },
         cors: true
     }
