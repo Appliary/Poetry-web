@@ -9,7 +9,6 @@ Server.register( [ {
 }, {
     register: require( 'hapi-swaggered' ),
     options: {
-        requiredTags: [],
         endpoint: '/api',
         info: {
             title: 'API Documentation',
@@ -18,7 +17,6 @@ Server.register( [ {
         cors: true
     }
 } ], ( err ) => {
-
     if ( err ) throw err;
 
     Events.on( 'web:route', {}, ( route, sender ) => {
