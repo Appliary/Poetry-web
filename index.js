@@ -4,11 +4,11 @@ const Log = require( 'poetry/lib/methods/log.js' ),
 
 let routes = {};
 
+<<<<<<< HEAD
 Server.register( [
 	{
 	    register: require( 'h2o2' )
-	},
-	{
+	}, {
 		register: require( 'hapi-swaggered' ),
 		options: {
 			endpoint: '/api',
@@ -20,7 +20,6 @@ Server.register( [
 		}
 	}
 ], ( err ) => {
-
     if ( err ) throw err;
 
     Events.on( 'web:route', {}, ( route, sender ) => {
@@ -33,16 +32,16 @@ Server.register( [
         if ( !routes[ r ] ) {
 
             Log.info( 'New route `' + r + '` registered for',
-            sender.address +':'+ poetryPort );
+                sender.address + ':' + poetryPort );
 
             // Register the HOST ip
-            routes[ r ] = [ sender.address+':'+ poetryPort ];
+            routes[ r ] = [ sender.address + ':' + poetryPort ];
 
             // Add handler
             route.handler = handler( r );
             // Don't parse
             if ( !route.config ) route.config = {};
-            if( route.method.toUpperCase() != 'GET' && route.method.toUpperCase() != 'HEAD')
+            if ( route.method.toUpperCase() != 'GET' && route.method.toUpperCase() != 'HEAD' )
                 route.config.payload = {
                     parse: false
                 };
@@ -58,8 +57,8 @@ Server.register( [
             Log.info( 'Balanced route `' + r + '` registered for', sender.address );
 
             // Add HOST ip
-            if ( routes[ r ].indexOf( sender.address+':'+ poetryPort ) )
-                routes[ r ].push( sender.address+':'+ poetryPort );
+            if ( routes[ r ].indexOf( sender.address + ':' + poetryPort ) )
+                routes[ r ].push( sender.address + ':' + poetryPort );
 
         }
 
@@ -74,17 +73,17 @@ Server.register( [
             let node = routes[ route ].pop();
             routes[ route ].unshift( node );
 
-            let host = node.split(':');
+            let host = node.split( ':' );
 
             reply.proxy( {
-                host: host[0],
-                port: host[1] || 8000,
+                host: host[ 0 ],
+                port: host[ 1 ] || 8000,
                 protocol: 'http',
                 passThrough: true,
-                onResponse: (err, res, request, reply) => {
-                    reply(res)
-                    .header('X-PoweredBy', 'Poetry')
-                    .header('X-MicroServ', node);
+                onResponse: ( err, res, request, reply ) => {
+                    reply( res )
+                        .header( 'X-PoweredBy', 'Poetry' )
+                        .header( 'X-MicroServ', node );
                 }
             } );
 
@@ -92,6 +91,6 @@ Server.register( [
 
     }
 
-    Events.emit('web:init');
+    Events.emit( 'web:init' );
 
 } );
