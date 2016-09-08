@@ -12,6 +12,8 @@
   "dependencies": {
     "h2o2": "^5.1.0",
     "hapi-swaggered": "^2.7.0",
-    "poetry": "^0.0.10"
+    "joi": "^9.0.4",
+    "joi-to-markdown": "^1.0.1",
+    "poetry": "0.0.11"
   }
 }
