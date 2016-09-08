@@ -204,6 +204,9 @@ Server.register( [ {
                             case 'object':
                                 example = setter( example, {} );
                                 break;
+                            case 'Date':
+                                example = setter( example, Date.now() );
+                                break;
                             default:
                                 example = setter( example, null );
                             }
