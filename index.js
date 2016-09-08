@@ -1,6 +1,7 @@
 const Log = require( 'poetry/lib/methods/log.js' ),
     Server = require( 'poetry/lib/server.js' ),
-    Events = require( 'poetry/lib/methods/events.js' );
+    Events = require( 'poetry/lib/methods/events.js' ),
+    http = require( 'http' );
 
 let routes = {};
 
@@ -89,10 +90,24 @@ Server.register( [ {
                     reply( res )
                         .header( 'X-PoweredBy', 'Poetry' )
                         .header( 'X-MicroServ', node );
+
+                    if ( err && err.code == 'ECONNREFUSED' )
+                        healthCheck( node );
                 }
             } );
 
         };
+
+    }
+
+    function healthCheck( node ) {
+
+        Log.warn( 'Cleaned node', node );
+        Object.keys(routes).forEach( ( route ) => {
+            let i = routes[route].indexOf( node );
+            if ( ~i ) routes[route].splice( i, 1 );
+        } );
+        Events.emit( 'web:init' );
 
     }
 
