@@ -43,32 +43,7 @@ Server.register( [ {
                 if ( !route.config.plugins )
                     route.config.plugins = {};
                 if ( !route.config.plugins[ 'payload' ] )
-                // route.config.plugins[ 'payload' ] = route.config.validate.payload
-                    route.config.plugins[ 'payload' ] = {
-                    version: Joi.number()
-                        .default( 1 ),
-
-                    device: Joi.object( {
-                            id: Joi.string()
-                                .required()
-                        } )
-                        .required(),
-
-                    timestamp: Joi.date()
-                        .default( Date.now, 'Date.now()' ),
-
-                    measurements: Joi.array()
-                        .single()
-                        .default( [] )
-                        .items( Joi.object( {
-                            type: Joi.string()
-                                .required(),
-                            id: Joi.string(),
-                            value: Joi.any()
-                                .required(),
-                            unit: Joi.string()
-                        } ) )
-                }
+                    route.config.plugins[ 'payload' ] = route.config.validate.payload
 
                 route.config.validate.payload = undefined;
 
