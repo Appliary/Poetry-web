@@ -72,7 +72,7 @@ Server.register( [ {
         // Return the real handler
         return function ( req, reply ) {
 
-            if ( !routes[ route ] )
+            if ( !routes[ route ] || !routes[ route ].length )
                 return reply( 503 );
 
             // Round robin'
