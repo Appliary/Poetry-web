@@ -72,9 +72,8 @@ Server.register( [ {
         // Return the real handler
         return function ( req, reply ) {
 
-            if ( routes[ route ] )
-                reply()
-                .status( 503 );
+            if ( !routes[ route ] )
+                return reply( 503 );
 
             // Round robin'
             let node = routes[ route ].pop();
