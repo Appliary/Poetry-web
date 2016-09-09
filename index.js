@@ -158,7 +158,7 @@ Server.register( [ {
                     url: 'http://' + base + route.path,
                     dataMode: 'raw',
                     rawModeData: '',
-                    headers: "Content-Type: application/javascript\n"
+                    headers: "Content-Type: application/json\n"
                 }
 
                 if ( route.settings.validate.params ) {
