@@ -161,21 +161,27 @@ Server.register( [ {
                 }
 
                 if ( route.settings.validate.params ) {
-                    let params = Joi.object( route.settings.validate.params );
+                    let params = route.settings.validate.params;
+                    if( !params.isJoi && typeof params === 'object' )
+                        params = Joi.object( params );
                     request.description += '\n\n \n\n**URL Params**\n';
                     request.description += J2M.convertSchema( params )
                         .md;
                 }
 
                 if ( route.settings.validate.query ) {
-                    let query = Joi.object( route.settings.validate.query );
+                    let query = route.settings.validate.query;
+                    if( !query.isJoi && typeof query === 'object' )
+                        query = Joi.object( query );
                     request.description += '\n\n \n\n**URL Variables**\n';
                     request.description += J2M.convertSchema( query )
                         .md;
                 }
 
                 if ( route.settings.plugins.payload ) {
-                    let payload = Joi.object( route.settings.plugins.payload );
+                    let payload = route.settings.plugins.payload;
+                    if( !payload.isJoi && typeof payload === 'object' )
+                        payload = Joi.object( payload );
                     payload = J2M.convertSchema( payload );
                     request.description += '\n\n \n\n**Payload**\n';
                     request.description += payload.md.replace(/\s\[\+\d\s\]/g, '[]');
