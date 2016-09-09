@@ -179,7 +179,7 @@ Server.register( [ {
                     let payload = Joi.object( route.settings.plugins.payload );
                     payload = J2M.convertSchema( payload );
                     request.description += '\n\n \n\n**Payload**\n';
-                    request.description += payload.md;
+                    request.description += payload.md.replace(/\s\[\+\d\s\]/g, '[]');
                     var example = {};
                     if ( payload.records && payload.records.length )
                         payload.records.forEach( ( record ) => {
@@ -204,7 +204,7 @@ Server.register( [ {
                             case 'object':
                                 example = setter( example, {} );
                                 break;
-                            case 'Date':
+                            case 'date':
                                 example = setter( example, Date.now() );
                                 break;
                             default:
