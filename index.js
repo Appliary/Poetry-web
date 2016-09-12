@@ -164,7 +164,7 @@ Server.register( [ {
                     let params = route.settings.validate.params;
                     if( !params.isJoi && typeof params === 'object' )
                         params = Joi.object( params );
-                    request.description += '\n\n \n\n**URL Params**\n';
+                    request.description += '\n\n---\n\n**URL Params**\n';
                     request.description += J2M.convertSchema( params )
                         .md;
                 }
@@ -173,7 +173,7 @@ Server.register( [ {
                     let query = route.settings.validate.query;
                     if( !query.isJoi && typeof query === 'object' )
                         query = Joi.object( query );
-                    request.description += '\n\n \n\n**URL Variables**\n';
+                    request.description += '\n\n---\n\n**URL Variables**\n';
                     request.description += J2M.convertSchema( query )
                         .md;
                 }
@@ -183,7 +183,7 @@ Server.register( [ {
                     if( !payload.isJoi && typeof payload === 'object' )
                         payload = Joi.object( payload );
                     payload = J2M.convertSchema( payload );
-                    request.description += '\n\n \n\n**Payload**\n';
+                    request.description += '\n\n---\n\n**Payload**\n';
                     request.description += payload.md.replace(/\s\[\+\d\s\]/g, '[]');
                     var example = {};
                     if ( payload.records && payload.records.length )
