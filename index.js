@@ -37,6 +37,18 @@ Server.register( [ {
                     parse: false
                 };
 
+            // Cleanup query validation
+            if( route.config.validate && route.config.validate.query ) {
+
+            	if ( !route.config.plugins )
+                    route.config.plugins = {};
+                if ( !route.config.plugins[ 'query' ] )
+                    route.config.plugins[ 'query' ] = route.config.validate.query;
+
+                route.config.validate.query = undefined;
+                
+            }
+
             // Cleanup payload validation
             if ( route.config.validate && route.config.validate.payload ) {
 
@@ -169,8 +181,8 @@ Server.register( [ {
                         .md;
                 }
 
-                if ( route.settings.validate.query ) {
-                    let query = route.settings.validate.query;
+                if ( route.settings.plugins.query ) {
+                    let query = route.settings.plugins.query;
                     if( !query.isJoi && typeof query === 'object' )
                         query = Joi.object( query );
                     request.description += '\n\n---\n\n**URL Variables**\n';
