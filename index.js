@@ -40,7 +40,8 @@ Server.register( [ {
 
             route.config.cors = {
                 credentials: true,
-                origin: [ '*' ]
+                origin: [ '*' ],
+                headers: [ 'Accept', 'Authorization', 'Content-Type', 'If-None-Match' ]
             }
 
             // Cleanup query validation
@@ -138,7 +139,8 @@ Server.register( [ {
         config: {
             cors: {
                 credentials: true,
-                origin: [ '*' ]
+                origin: [ '*' ],
+                headers: [ 'Accept', 'Authorization', 'Content-Type', 'If-None-Match' ]
             }
         },
         handler( request, reply ) {
