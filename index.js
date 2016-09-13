@@ -135,8 +135,14 @@ Server.register( [ {
     Server.route( {
         method: 'options',
         path: '/{p*}',
+        config: {
+            cors: {
+                credentials: true,
+                origin: [ '*' ]
+            }
+        },
         handler( request, reply ) {
-            reply( '  ¡ Holà amigo !  ' );
+            reply();
         }
     } )
 
