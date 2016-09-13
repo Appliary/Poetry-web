@@ -181,9 +181,14 @@ Server.register( [ {
             // Parse routes
             routes.forEach( ( route ) => {
 
+                if( !route.settings.description &&
+                    (!route.settings.tags || !route.settings.tags.length) &&
+                    (!route.settings.notes || !route.settings.notes.length)
+                ) return;
+
                 // Main properties
                 let request = {
-                    id: route.fingerprint,
+                    id: route.method + route.fingerprint,
                     name: route.settings.description || route.fingerprint,
                     description: ( route.settings.notes || [] )
                         .join( '\n\n' ),
