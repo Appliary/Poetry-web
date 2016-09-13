@@ -108,7 +108,8 @@ Server.register( [ {
                 onResponse: ( err, res, request, reply ) => {
                     reply( res )
                         .header( 'X-PoweredBy', 'Poetry' )
-                        .header( 'X-MicroServ', node );
+                        .header( 'X-MicroServ', node )
+                        .header( 'Access-Control-Allow-Headers', 'Accept, Authorization, Content-Type, If-None-Match')
 
                     if ( err && err.code == 'ECONNREFUSED' )
                         healthCheck( node );
@@ -144,7 +145,7 @@ Server.register( [ {
             }
         },
         handler( request, reply ) {
-            reply();
+            reply().header( 'Access-Control-Allow-Headers', 'Accept, Authorization, Content-Type, If-None-Match');
         }
     } )
 
@@ -245,6 +246,9 @@ Server.register( [ {
                                 break;
                             case 'date':
                                 example = setter( example, Date.now() );
+                                break;
+                            case 'boolean':
+                                example = setter( example, false );
                                 break;
                             default:
                                 example = setter( example, null );
