@@ -92,7 +92,7 @@ Server.register( [ {
         return function ( req, reply ) {
 
             if ( !routes[ route ] || !routes[ route ].length )
-                return reply( 503 );
+                return this( req, reply );
 
             // Round robin'
             let node = routes[ route ].pop();
