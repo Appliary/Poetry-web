@@ -100,7 +100,7 @@ Server.register( [ {
 
             let host = node.split( ':' );
 
-            Log.silly(`Sending "${route}" to "${node}"`);
+            Log.silly( `Sending "${route}" to "${node}"` );
 
             reply.proxy( {
                 host: host[ 0 ],
@@ -108,13 +108,18 @@ Server.register( [ {
                 protocol: 'http',
                 passThrough: true,
                 onResponse: ( err, res, request, reply ) => {
+                    if ( err && err.code == 'ECONNREFUSED' ) {
+                        healthCheck( node );
+                        reply( err )
+                            .code( 503 )
+                            .header( 'X-MicroServ', node );
+                    }
+
                     reply( res )
                         .header( 'X-PoweredBy', 'Poetry' )
                         .header( 'X-MicroServ', node )
                         .header( 'Access-Control-Allow-Headers', 'Accept, Authorization, Content-Type, If-None-Match' )
 
-                    if ( err && err.code == 'ECONNREFUSED' )
-                        healthCheck( node );
                 }
             } );
 
