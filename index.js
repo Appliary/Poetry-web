@@ -100,6 +100,8 @@ Server.register( [ {
 
             let host = node.split( ':' );
 
+            Log.silly(`Sending "${route}" to "${node}"`);
+
             reply.proxy( {
                 host: host[ 0 ],
                 port: host[ 1 ] || 8000,
@@ -109,7 +111,7 @@ Server.register( [ {
                     reply( res )
                         .header( 'X-PoweredBy', 'Poetry' )
                         .header( 'X-MicroServ', node )
-                        .header( 'Access-Control-Allow-Headers', 'Accept, Authorization, Content-Type, If-None-Match')
+                        .header( 'Access-Control-Allow-Headers', 'Accept, Authorization, Content-Type, If-None-Match' )
 
                     if ( err && err.code == 'ECONNREFUSED' )
                         healthCheck( node );
@@ -145,15 +147,17 @@ Server.register( [ {
             }
         },
         handler( request, reply ) {
-            reply().header( 'Access-Control-Allow-Headers', 'Accept, Authorization, Content-Type, If-None-Match');
+            reply()
+                .header( 'Access-Control-Allow-Headers', 'Accept, Authorization, Content-Type, If-None-Match' );
         }
-    } )
+    } );
 
     Server.route( {
         method: 'get',
         path: '/api',
         config: {
-            description: 'API Documentation'
+            description: 'API Documentation',
+            notes: [ 'Return a postman collection of the current APIs.' ]
         },
         handler( request, reply ) {
 
@@ -181,9 +185,9 @@ Server.register( [ {
             // Parse routes
             routes.forEach( ( route ) => {
 
-                if( !route.settings.description &&
-                    (!route.settings.tags || !route.settings.tags.length) &&
-                    (!route.settings.notes || !route.settings.notes.length)
+                if ( !route.settings.description &&
+                    ( !route.settings.tags || !route.settings.tags.length ) &&
+                    ( !route.settings.notes || !route.settings.notes.length )
                 ) return;
 
                 // Main properties
@@ -234,7 +238,7 @@ Server.register( [ {
                             let setter = new Function( "example", "newval", "example." + record.path + " = newval; return example" );
 
                             if ( record.examples && record.examples.length )
-                                return setter( example, record.examples[ 0 ] );
+                                return ( example = setter( example, record.examples[ 0 ] ) );
 
                             switch ( record.type ) {
                             case 'string':
