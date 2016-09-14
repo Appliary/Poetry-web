@@ -194,8 +194,8 @@ Server.register( [ {
                     headers: "Content-Type: application/json\n"
                 }
 
-                if ( route.settings.validate.params ) {
-                    let params = route.settings.validate.params;
+                if ( route.settings.plugins.params ) {
+                    let params = route.settings.plugins.params;
                     if ( !params.isJoi && typeof params === 'object' )
                         params = Joi.object( params );
                     request.description += '\n\n---\n\n**URL Params**\n';
