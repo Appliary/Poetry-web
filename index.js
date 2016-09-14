@@ -43,29 +43,19 @@ Server.register( [ {
                 origin: [ '*' ],
                 headers: [ 'Accept', 'Authorization', 'Content-Type', 'If-None-Match' ]
             }
-
-            // Cleanup query validation
-            if ( route.config.validate && route.config.validate.query ) {
-
-                if ( !route.config.plugins )
-                    route.config.plugins = {};
-                if ( !route.config.plugins[ 'query' ] )
-                    route.config.plugins[ 'query' ] = route.config.validate.query;
-
-                route.config.validate.query = undefined;
-
-            }
-
-            // Cleanup payload validation
-            if ( route.config.validate && route.config.validate.payload ) {
-
-                if ( !route.config.plugins )
-                    route.config.plugins = {};
-                if ( !route.config.plugins[ 'payload' ] )
-                    route.config.plugins[ 'payload' ] = route.config.validate.payload
-
-                route.config.validate.payload = undefined;
-
+            
+            // Cleanup validation
+            if ( route.config.validate ) {
+            	
+            	if ( !route.config.plugins )
+            		route.config.plugins = {};
+            	
+            	for ( var key in route.config.validate ) {
+            		if ( !route.config.plugins[key] )
+            			route.config.plugins[key] = route.config.validate[key];
+            		route.config.validate[key] = undefined;
+            	}
+            	
             }
 
             // Register to HAPI
