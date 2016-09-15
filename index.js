@@ -43,19 +43,19 @@ Server.register( [ {
                 origin: [ '*' ],
                 headers: [ 'Accept', 'Authorization', 'Content-Type', 'If-None-Match' ]
             }
-            
+
             // Cleanup validation
             if ( route.config.validate ) {
-            	
-            	if ( !route.config.plugins )
-            		route.config.plugins = {};
-            	
-            	for ( var key in route.config.validate ) {
-            		if ( !route.config.plugins[key] )
-            			route.config.plugins[key] = route.config.validate[key];
-            		route.config.validate[key] = undefined;
-            	}
-            	
+
+                if ( !route.config.plugins )
+                    route.config.plugins = {};
+
+                for ( var key in route.config.validate ) {
+                    if ( !route.config.plugins[ key ] )
+                        route.config.plugins[ key ] = route.config.validate[ key ];
+                    route.config.validate[ key ] = undefined;
+                }
+
             }
 
             // Register to HAPI
@@ -66,11 +66,12 @@ Server.register( [ {
         // Existing route -> load balancing
         else {
 
-            Log.info( 'Balanced route `' + r + '` registered for', sender.address );
-
             // Add HOST ip
-            if ( routes[ r ].indexOf( sender.address + ':' + poetryPort ) )
-                routes[ r ].push( sender.address + ':' + poetryPort );
+            if ( ~routes[ r ].indexOf( sender.address + ':' + poetryPort ) )
+                return;
+
+            routes[ r ].push( sender.address + ':' + poetryPort );
+            Log.info( 'Balanced route `' + r + '` registered for', sender.address );
 
         }
 
@@ -79,10 +80,13 @@ Server.register( [ {
     function handler( route ) {
 
         // Return the real handler
-        return function ( req, reply ) {
+        let handleRoute = function handleRoute( req, reply ) {
 
-            if ( !routes[ route ] || !routes[ route ].length )
-                return this( req, reply );
+            if ( !routes[ route ] || !routes[ route ].length ) {
+                Log.warn( 'No more route for', route );
+                return reply()
+                    .code( 404 );
+            }
 
             // Round robin'
             let node = routes[ route ].pop();
@@ -99,10 +103,9 @@ Server.register( [ {
                 passThrough: true,
                 onResponse: ( err, res, request, reply ) => {
                     if ( err && err.code == 'ECONNREFUSED' ) {
+                        Log.error( err );
                         healthCheck( node );
-                        reply( err )
-                            .code( 503 )
-                            .header( 'X-MicroServ', node );
+                        handleRoute( req, reply );
                     }
 
                     reply( res )
@@ -114,6 +117,8 @@ Server.register( [ {
             } );
 
         };
+
+        return handleRoute;
 
     }
 
