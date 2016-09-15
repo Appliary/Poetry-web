@@ -101,11 +101,13 @@ Server.register( [ {
                 port: host[ 1 ] || 8000,
                 protocol: 'http',
                 passThrough: true,
+                localStatePassThrough: true,
                 onResponse: ( err, res, request, reply ) => {
+
                     if ( err && err.code == 'ECONNREFUSED' ) {
                         Log.error( err );
                         healthCheck( node );
-                        handleRoute( req, reply );
+                        return handleRoute( req, reply );
                     }
 
                     reply( res )
