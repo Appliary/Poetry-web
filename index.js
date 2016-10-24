@@ -114,7 +114,7 @@ Server.register( [ {
                         .header( 'X-PoweredBy', 'Poetry' )
                         .header( 'X-MicroServ', node )
                         .header( 'Access-Control-Allow-Headers', 'Accept, Authorization, Content-Type, If-None-Match' )
-                        .header( 'Access-Control-Request-Method', 'HEAD, GET, POST, PUT, DELETE')
+                        .header( 'Access-Control-Allow-Method', 'HEAD, GET, POST, PUT, DELETE')
 
                 }
             } );
@@ -152,7 +152,7 @@ Server.register( [ {
         handler( request, reply ) {
             reply()
                 .header( 'Access-Control-Allow-Headers', 'Accept, Authorization, Content-Type, If-None-Match' )
-                .header( 'Access-Control-Request-Method', 'HEAD, GET, POST, PUT, DELETE');
+                .header( 'Access-Control-Allow-Method', 'HEAD, GET, POST, PUT, DELETE');
         }
     } );
 
