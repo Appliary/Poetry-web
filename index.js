@@ -104,7 +104,7 @@ Server.register( [ {
                 localStatePassThrough: true,
                 onResponse: ( err, res, request, reply ) => {
 
-                    if ( err && err.code == 'ECONNREFUSED' ) {
+                    if ( err && ~['EHOSTUNREACH', 'ECONNREFUSED'].indexOf( err.code ) ) {
                         Log.error( err );
                         healthCheck( node );
                         return handleRoute( req, reply );
