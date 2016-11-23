@@ -104,8 +104,11 @@ Server.register( [ {
                 localStatePassThrough: true,
                 onResponse: ( err, res, request, reply ) => {
 
-                    if ( err && ~['EHOSTUNREACH', 'ECONNREFUSED'].indexOf( err.code ) ) {
-                        Log.error( err );
+                    if ( err )
+                        Log.warn( err );
+
+                    if ( err && ~[ 'EHOSTUNREACH', 'ECONNREFUSED' ].indexOf( err.code ) ) {
+                        Log.err( 'A node seems to be down', host );
                         healthCheck( node );
                         return handleRoute( req, reply );
                     }
@@ -114,7 +117,7 @@ Server.register( [ {
                         .header( 'X-PoweredBy', 'Poetry' )
                         .header( 'X-MicroServ', node )
                         .header( 'Access-Control-Allow-Headers', 'Accept, Authorization, Content-Type, If-None-Match' )
-                        .header( 'Access-Control-Allow-Methods', 'HEAD, GET, POST, PUT, DELETE')
+                        .header( 'Access-Control-Allow-Methods', 'HEAD, GET, POST, PUT, DELETE' )
 
                 }
             } );
@@ -152,7 +155,7 @@ Server.register( [ {
         handler( request, reply ) {
             reply()
                 .header( 'Access-Control-Allow-Headers', 'Accept, Authorization, Content-Type, If-None-Match' )
-                .header( 'Access-Control-Allow-Methods', 'HEAD, GET, POST, PUT, DELETE');
+                .header( 'Access-Control-Allow-Methods', 'HEAD, GET, POST, PUT, DELETE' );
         }
     } );
 
