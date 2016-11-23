@@ -318,6 +318,10 @@ Server.register( [ {
 
     Events.emit( 'web:init' );
 
+    setTimeout(()=>{
+        Events.emit( 'web:init' );
+    },10000);
+
 } );
 
 Object.resolve = function ( path, obj, safe ) {
