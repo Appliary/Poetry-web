@@ -108,9 +108,8 @@ Server.register( [ {
                         Log.warn( err );
 
                     if ( err && ~[ 'EHOSTUNREACH', 'ECONNREFUSED' ].indexOf( err.code ) ) {
-                        Log.err( 'A node seems to be down', host );
-                        healthCheck( node );
-                        return handleRoute( req, reply );
+                        Log.error( 'A node seems to be down', host );
+                        healthCheck( node, req, reply );
                     }
 
                     reply( res )
@@ -128,7 +127,7 @@ Server.register( [ {
 
     }
 
-    function healthCheck( node ) {
+    function healthCheck( node, req, reply ) {
 
         // TODO healthCheck before cleaning
 
@@ -139,6 +138,8 @@ Server.register( [ {
                 if ( ~i ) routes[ route ].splice( i, 1 );
             } );
         Events.emit( 'web:init' );
+
+        return handleRoute( req, reply );
 
     }
 
