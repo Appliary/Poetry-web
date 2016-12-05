@@ -139,7 +139,7 @@ Server.register( [ {
             } );
         Events.emit( 'web:init' );
 
-        return handleRoute( req, reply );
+        reply.redirect(req.path).code(307);
 
     }
 
