@@ -9,7 +9,7 @@ let routes = {};
 
 Server.register( [ {
     register: require( 'h2o2' )
-} ], ( err ) => {
+} ], err => {
     if ( err ) throw err;
 
     Events.on( 'web:route', {}, ( route, sender ) => {
@@ -109,7 +109,7 @@ Server.register( [ {
 
                     if ( err && ~[ 'EHOSTUNREACH', 'ECONNREFUSED' ].indexOf( err.code ) ) {
                         Log.error( 'A node seems to be down', host );
-                        healthCheck( node, req, reply );
+                        return healthCheck( node, req, reply );
                     }
 
                     reply( res )
