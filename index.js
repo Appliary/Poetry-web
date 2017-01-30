@@ -95,6 +95,7 @@ Server.register( [ {
             let host = node.split( ':' );
 
             Log.silly( `Sending "${route}" to "${node}"` );
+            req.headers[ 'x-host' ] = req.headers.host;
 
             reply.proxy( {
                 host: host[ 0 ],
@@ -102,6 +103,7 @@ Server.register( [ {
                 protocol: 'http',
                 passThrough: true,
                 localStatePassThrough: true,
+                xforward: true,
                 onResponse: ( err, res, request, reply ) => {
 
                     if ( err )
@@ -139,7 +141,8 @@ Server.register( [ {
             } );
         Events.emit( 'web:init' );
 
-        reply.redirect(req.path).code(307);
+        reply.redirect( req.path )
+            .code( 307 );
 
     }
 
@@ -249,26 +252,26 @@ Server.register( [ {
                                 return ( example = setter( example, record.examples[ 0 ] ) );
 
                             switch ( record.type ) {
-                            case 'string':
-                                example = setter( example, "" );
-                                break;
-                            case 'number':
-                                example = setter( example, 0 );
-                                break;
-                            case 'array':
-                                example = setter( example, [] );
-                                break;
-                            case 'object':
-                                example = setter( example, {} );
-                                break;
-                            case 'date':
-                                example = setter( example, Date.now() );
-                                break;
-                            case 'boolean':
-                                example = setter( example, false );
-                                break;
-                            default:
-                                example = setter( example, null );
+                                case 'string':
+                                    example = setter( example, "" );
+                                    break;
+                                case 'number':
+                                    example = setter( example, 0 );
+                                    break;
+                                case 'array':
+                                    example = setter( example, [] );
+                                    break;
+                                case 'object':
+                                    example = setter( example, {} );
+                                    break;
+                                case 'date':
+                                    example = setter( example, Date.now() );
+                                    break;
+                                case 'boolean':
+                                    example = setter( example, false );
+                                    break;
+                                default:
+                                    example = setter( example, null );
                             }
                         } );
 
@@ -319,9 +322,9 @@ Server.register( [ {
 
     Events.emit( 'web:init' );
 
-    setTimeout(()=>{
+    setTimeout( () => {
         Events.emit( 'web:init' );
-    },10000);
+    }, 10000 );
 
 } );
 
