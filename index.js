@@ -168,7 +168,12 @@ Server.register( [ {
         path: '/api',
         config: {
             description: 'API Documentation',
-            notes: [ 'Return a postman collection of the current APIs.' ]
+            notes: [ 'Return a postman collection of the current APIs.' ],
+            cors: {
+                credentials: true,
+                origin: [ '*' ],
+                headers: [ 'Accept', 'Authorization', 'Content-Type', 'If-None-Match' ]
+            }
         },
         handler( request, reply ) {
 
@@ -315,7 +320,9 @@ Server.register( [ {
                     doc.folders.push( folders[ folder ] );
                 } );
 
-            reply( doc );
+            reply( doc )
+                .header( 'Access-Control-Allow-Headers', 'Accept, Authorization, Content-Type, If-None-Match' )
+                .header( 'Access-Control-Allow-Methods', 'HEAD, GET, POST, PUT, DELETE' );
 
         }
     } );
