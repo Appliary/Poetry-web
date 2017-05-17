@@ -42,7 +42,7 @@ Server.register( [ {
                 credentials: true,
                 origin: [ '*' ],
                 headers: [ 'Accept', 'Authorization', 'Content-Type', 'If-None-Match' ]
-            }
+            };
 
             // Cleanup validation
             if ( route.config.validate ) {
@@ -118,7 +118,7 @@ Server.register( [ {
                         .header( 'X-PoweredBy', 'Poetry' )
                         .header( 'X-MicroServ', node )
                         .header( 'Access-Control-Allow-Headers', 'Accept, Authorization, Content-Type, If-None-Match' )
-                        .header( 'Access-Control-Allow-Methods', 'HEAD, GET, POST, PUT, DELETE' )
+                        .header( 'Access-Control-Allow-Methods', 'HEAD, GET, POST, PUT, DELETE' );
 
                 }
             } );
@@ -218,7 +218,7 @@ Server.register( [ {
                     dataMode: 'raw',
                     rawModeData: '',
                     headers: "Content-Type: application/json\n"
-                }
+                };
 
                 if ( route.settings.plugins.params ) {
                     let params = route.settings.plugins.params;
@@ -338,6 +338,6 @@ Server.register( [ {
 Object.resolve = function ( path, obj, safe ) {
     return path.split( '.' )
         .reduce( function ( prev, curr ) {
-            return !safe ? prev[ curr ] : ( prev ? prev[ curr ] : undefined )
-        }, obj || self )
-}
+            return !safe ? prev[ curr ] : ( prev ? prev[ curr ] : undefined );
+        }, obj || self );
+};
