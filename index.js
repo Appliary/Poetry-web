@@ -341,3 +341,9 @@ Object.resolve = function ( path, obj, safe ) {
             return !safe ? prev[ curr ] : ( prev ? prev[ curr ] : undefined );
         }, obj || self );
 };
+
+Poetry.on("ping:web", {}, () => {
+    // send web info
+    Poetry.emit("web:info", {});
+});
+
