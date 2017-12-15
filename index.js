@@ -342,8 +342,9 @@ Object.resolve = function ( path, obj, safe ) {
         }, obj || self );
 };
 
-Poetry.on("ping:web", {}, () => {
-    // send web info
-    Poetry.emit("web:info", {});
+// listen to "ping:web"
+Events.on("ping:web", {}, () => {
+    // send "web:info"
+    Events.emit("web:info", {});
 });
 
