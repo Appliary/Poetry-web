@@ -3,7 +3,7 @@ FROM node
 WORKDIR /var/app
 
 COPY ./package.json /var/app/package.json
-RUN npm install
+RUN yarn install
 
 COPY . /var/app
 
