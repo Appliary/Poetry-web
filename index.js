@@ -32,10 +32,11 @@ Server.register( [ {
 
             // Don't parse
             if ( !route.config ) route.config = {};
-            if ( route.method.toUpperCase() != 'GET' && route.method.toUpperCase() != 'HEAD' )
-                route.config.payload = {
-                    parse: false
-                };
+            if ( route.method.toUpperCase() != 'GET' && route.method.toUpperCase() != 'HEAD' ) {
+                if ( !route.config.payload )
+                    route.config.payload = {};
+                route.config.payload.parse = false;
+            }
 
 
             route.config.cors = {
@@ -343,8 +344,7 @@ Object.resolve = function ( path, obj, safe ) {
 };
 
 // listen to "ping:web"
-Events.on("ping:web", {}, () => {
+Events.on( "ping:web", {}, () => {
     // send "web:info"
-    Events.emit("web:info", {});
-});
-
+    Events.emit( "web:info", {} );
+} );
